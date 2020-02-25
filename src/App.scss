@@ -4,6 +4,19 @@
   font-size: 16px;
   font-weight: bold;
   padding: 20px;
+  svg {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 1px;
+    width: 20px;
+    height: 20px;
+    &:first-child {
+      margin-right: 5px;
+    }
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
 }
 .biu-calendar__week {
   display: grid;
@@ -44,11 +57,18 @@
   position: relative;
   pointer-events: none;
   z-index: 1;
+  &.active{
+    color: #fff;
+    background: rgb(253, 171, 61);
+  }
+  &.is-disabled {
+    color: rgba(#98a0a6, 0.6);
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f9f9fa' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    cursor: not-allowed;
+  }
 }
-.biu-calendar__day.active{
-  color: #fff;
-  background: rgb(253, 171, 61);
-}
+
 /* .biu-calendar__day:nth-of-type(7n + 7) {
   border-right: 0;
 } */
@@ -98,11 +118,4 @@
 }
 .biu-calendar__day:nth-of-type(7n + 7) {
   grid-column: 7/7;
-}
-
-.biu-calendar__day.is-disabled {
-  color: rgba(#98a0a6, 0.6);
-  background-color: #ffffff;
-  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f9f9fa' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
-  cursor: not-allowed;
 }
