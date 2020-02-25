@@ -1,5 +1,7 @@
 This project was build with react and grid layout.
 
+## Demo
+![demo](/public/demo.png)
 ## Available Scripts
 
 In the project directory, you can run:
