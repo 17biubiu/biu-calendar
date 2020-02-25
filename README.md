@@ -1,2 +1,3 @@
-# biu-calendar
-base grid layout &amp;&amp; react
+---
+permalink: /docs/index.html
+---
