@@ -86,28 +86,24 @@ export function getCurrentDate () {
   return {year, month, day};
 }
 
-export function previousMonth () {
-  if (defaultMonth === 1) {
-    defaultMonth = 12;
-    defaultYear = defaultYear - 1;
+export function previousMonth (year: number, month: number) {
+  if (month === 1) {
+    month = 12;
+    year = year - 1;
   } else {
-    defaultMonth = defaultMonth - 1;
+    month = month - 1;
   }
-
-  defaultDay = 1;
-  getCurrentCalendar(defaultYear, defaultMonth, defaultDay);
+  return {year, month};
 }
 
-export function nextMonth () {
-  if (defaultMonth === 12) {
-    defaultMonth = 1;
-    defaultYear = defaultYear + 1;
+export function nextMonth (year: number, month: number) {
+  if (month === 12) {
+    month = 1;
+    year = year + 1;
   } else {
-    defaultMonth = defaultMonth + 1;
+    month = month + 1;
   }
-
-  defaultDay = 1;
-  getCurrentCalendar(defaultYear, defaultMonth, defaultDay);
+  return {year, month};
 }
 
 export {defaultYear, defaultMonth, defaultDay};

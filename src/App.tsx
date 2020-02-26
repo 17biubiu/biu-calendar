@@ -1,9 +1,31 @@
-import React from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.scss';
 import { IWeek } from './Calendar.type';
-import { getCurrentDate, getCurrentCalendar, previousMonth, nextMonth, defaultYear, defaultMonth } from './utils/time';
+import { getCurrentCalendar, previousMonth, nextMonth, defaultYear, defaultMonth, defaultDay } from './utils/time';
 import {ReactComponent as Back} from './assets/svg/back.svg';
 import {ReactComponent as Next} from './assets/svg/next.svg';
+
+interface IDate {
+  year: number; 
+  month: number;
+  day?: number;
+}
+
+interface IDateObject {
+  value: string,
+  week: number,
+  day: number,
+  other: boolean,
+  isToday: boolean
+}
+
+const initalState:IDate = {
+  year: defaultYear,
+  month: defaultMonth,
+  day: defaultDay
+}
+
+
 function WeekContainer() {
   const weekDatas: IWeek[] = [
     { text: 'SUN', value: 0 },
@@ -25,8 +47,9 @@ function WeekContainer() {
 }
 
 function DayContainer() {
-  const {year, month, day} = getCurrentDate();
-  const days = getCurrentCalendar(year, month, day);
+  const [{year, month, day}] = useState(initalState);
+  console.log('month', month);
+  const days = getCurrentCalendar(year, month, day || 1);
   const dayList = days.map((day, index) => {
     if (day.other) {
       return (<div className="biu-calendar__day is-disabled" key={index}>{day.day}</div>);
@@ -40,12 +63,26 @@ function DayContainer() {
   )
 }
 
+function reducer(state: IDate, action: { type: string; }) {
+  switch (action.type) {
+    case 'prev':
+      getCurrentCalendar(state.year, state.month, 1);
+      return previousMonth(state.year, state.month);
+    case 'next':
+      getCurrentCalendar(state.year, state.month, 1);
+      return nextMonth(state.year, state.month);
+    default:
+      throw new Error();
+  }
+}
+
 function CalendarHeader (props: any) {
+  const [state, dispatch] = useReducer(reducer, initalState);
   return (
     <div className="biu-calendar__header">
-      <Back onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); previousMonth()}}/>
-      {`${defaultYear}年${defaultMonth}月`}
-      <Next onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); nextMonth()}}/>
+      <Back onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); dispatch({type: 'prev'})}}/>
+      {`${state.year}年${state.month}月`}
+      <Next onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); dispatch({type: 'next'})}}/>
     </div>
   )
 }
