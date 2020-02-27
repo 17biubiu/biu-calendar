@@ -11,12 +11,14 @@ function formateDate (year: number, month: number, day: number) {
   return `${year}-${formateWithZero(month)}-${formateWithZero(day)}`;
 }
 
+
 export function getCurrentCalendar(year: number, month: number, day: number) {
   let dayDate = [];
   const totalDays = 42;
   const currentDate = new Date(formateDate(year, month, day));
   // setDate(0):设置为上个月最后一天
-  // const lastMonth = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const last = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
   const lastDay = new Date(currentDate.setDate(0));
   // 获取当前月份的总天数
   const allDayNums = lastDay.getDate();
@@ -30,7 +32,7 @@ export function getCurrentCalendar(year: number, month: number, day: number) {
       week: new Date(dateString).getDay(),
       other: false,
       day: i,
-      isToday: dateString === formateDate(year, month, day) ? true : false
+      isToday: dateString === formateDate(defaultYear, defaultMonth, defaultDay) ? true : false
     }
     dayDate.push(dayObject);
   }

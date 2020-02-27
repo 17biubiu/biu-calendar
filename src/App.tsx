@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.scss';
 import { IWeek } from './Calendar.type';
 import { getCurrentCalendar, previousMonth, nextMonth, defaultYear, defaultMonth, defaultDay } from './utils/time';
@@ -19,13 +19,22 @@ interface IDateObject {
   isToday: boolean
 }
 
+interface Action {
+  type: string;
+}
+interface WithDispatch {
+  dispatch: (action: Action) => void;
+}
+
 const initalState:IDate = {
   year: defaultYear,
   month: defaultMonth,
   day: defaultDay
 }
 
-
+/**
+ * Render Week Component
+ */
 function WeekContainer() {
   const weekDatas: IWeek[] = [
     { text: 'SUN', value: 0 },
@@ -45,10 +54,12 @@ function WeekContainer() {
     </ul>
   )
 }
-
-function DayContainer() {
-  const [{year, month, day}] = useState(initalState);
-  console.log('month', month);
+/**
+ * Date Component
+ * @param props 
+ */
+function DayContainer(props: IDate) {
+  const {year, month, day} = props;
   const days = getCurrentCalendar(year, month, day || 1);
   const dayList = days.map((day, index) => {
     if (day.other) {
@@ -62,38 +73,49 @@ function DayContainer() {
     <div className="biu-calendar__day_container">{dayList}</div>
   )
 }
-
-function reducer(state: IDate, action: { type: string; }) {
+/**
+ * reducer
+ * @param state 
+ * @param action 
+ */
+function handleDateReducer(state: IDate, action: Action) {
   switch (action.type) {
     case 'prev':
       getCurrentCalendar(state.year, state.month, 1);
-      return previousMonth(state.year, state.month);
+      return Object.assign({ ...state }, previousMonth(state.year, state.month));
     case 'next':
       getCurrentCalendar(state.year, state.month, 1);
-      return nextMonth(state.year, state.month);
+      return Object.assign({ ...state }, nextMonth(state.year, state.month));
     default:
       throw new Error();
   }
 }
 
-function CalendarHeader (props: any) {
-  const [state, dispatch] = useReducer(reducer, initalState);
+
+/**
+ * calendar header switch date
+ * @param props 
+ */
+function CalendarHeader (props: IDate & WithDispatch) {
   return (
     <div className="biu-calendar__header">
-      <Back onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); dispatch({type: 'prev'})}}/>
-      {`${state.year}年${state.month}月`}
-      <Next onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); dispatch({type: 'next'})}}/>
+      <Back onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); props.dispatch({type: 'prev'})}}/>
+      {`${props.year}年${props.month}月`}
+      <Next onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); props.dispatch({type: 'next'})}}/>
     </div>
   )
 }
 
 function App() {
+
+  const [state, dispatch] = useReducer(handleDateReducer, initalState);
+  console.log('state', state);
   return (
     <div className="App">
       <div id="biu-calendar">
-        <CalendarHeader />
+        <CalendarHeader {...state} dispatch={dispatch} />
         <WeekContainer />
-        <DayContainer />
+        <DayContainer {...state} />
       </div>
     </div>
   );
