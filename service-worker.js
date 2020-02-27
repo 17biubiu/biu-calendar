@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/biu-calendar/precache-manifest.902874fffbd68d6bc007d07c7d64d1dc.js"
+  "/biu-calendar/precache-manifest.7db69591ba0057dabcf1795932b93afc.js"
 );
 
 self.addEventListener('message', (event) => {
