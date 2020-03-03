@@ -1,9 +1,11 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useEffect, useState} from 'react';
 import './App.scss';
 import { IWeek } from './Calendar.type';
 import { getCurrentCalendar, previousMonth, nextMonth, defaultYear, defaultMonth, defaultDay } from './utils/time';
 import {ReactComponent as Back} from './assets/svg/back.svg';
 import {ReactComponent as Next} from './assets/svg/next.svg';
+import { Radio} from 'antd';
+// import { RadioChangeEvent } from 'antd/lib/radio/interface';
 
 interface IDate {
   year: number; 
@@ -24,6 +26,10 @@ interface Action {
 }
 interface WithDispatch {
   dispatch: (action: Action) => void;
+}
+
+interface IhandleDateType{
+  [key: string]: any
 }
 
 const initalState:IDate = {
@@ -106,14 +112,34 @@ function CalendarHeader (props: IDate & WithDispatch) {
   )
 }
 
-function App() {
+function ButtonGroup (props: IhandleDateType) {
+  let {dateType, handleTypeChange} = props;
 
+  return (
+    <Radio.Group value={dateType} onChange={(e) => handleTypeChange(e.target.value)}>
+      <Radio.Button value="day">天</Radio.Button>
+      <Radio.Button value="week">周</Radio.Button>
+      <Radio.Button value="month">月</Radio.Button>
+    </Radio.Group>
+  )
+}
+
+function App() {
   const [state, dispatch] = useReducer(handleDateReducer, initalState);
-  console.log('state', state);
+  const [dateType, handleTypeChange] = useState('month');
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `Biu-Calendar-List`;
+  });
+  
   return (
     <div className="App">
       <div id="biu-calendar">
-        <CalendarHeader {...state} dispatch={dispatch} />
+        <div className="biu-calendar__header—container">
+          <CalendarHeader {...state} dispatch={dispatch} />
+          <ButtonGroup dateType={dateType} handleTypeChange={handleTypeChange}/>
+        </div>
         <WeekContainer />
         <DayContainer {...state} />
       </div>
