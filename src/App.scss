@@ -32,6 +32,10 @@
   overflow: auto;
 }
 
+.biu-calendar__week-header {
+  grid-template-columns: repeat(8, minmax(90px, 1fr));
+}
+
 .biu-calendar__week_item {
   font-size: 12px;
   text-transform: uppercase;
@@ -41,6 +45,26 @@
   border-top: 1px solid rgba(166, 168, 179, .3);
   line-height: 50px;
   font-weight: 500;
+}
+.biu-calendar__hour-container div {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(8, minmax(90px, 1fr));
+  grid-auto-rows: 20px;
+  span {
+    padding-left: 20px;
+  }
+  &:nth-of-type(odd) {
+    .biu-calendar__hour_item {
+      border-bottom: none;
+    }
+  }
+}
+.biu-calendar__hour_item {
+  border-top: none;
+  border-bottom: 1px solid rgba(166, 168, 179, .3);
+  border-right: 1px solid rgba(166, 168, 179, .3);
+  background: #fff;
 }
 
 .biu-calendar__day_container {

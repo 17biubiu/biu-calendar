@@ -41,7 +41,7 @@ const initalState:IDate = {
 /**
  * Render Week Component
  */
-function WeekContainer() {
+function WeekHeadContainer(props: Partial<IhandleDateType>) {
   const weekDatas: IWeek[] = [
     { text: 'SUN', value: 0 },
     { text: 'MON', value: 1 },
@@ -51,11 +51,14 @@ function WeekContainer() {
     { text: 'FRI', value: 5 },
     { text: 'SAT', value: 6 }
   ];
+  const isWeek = props.dateType === 'week';
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  isWeek ? weekDatas.unshift({text: '', value: -1}) : '';
 
   const weekList = weekDatas.map((week: IWeek) => <li className="biu-calendar__week_item" key={week.value}>{week.text}</li>);
 
   return (
-    <ul className="biu-calendar__week">
+    <ul className={isWeek ? 'biu-calendar__week biu-calendar__week-header' : 'biu-calendar__week'}>
       {weekList}
     </ul>
   )
@@ -106,7 +109,7 @@ function CalendarHeader (props: IDate & WithDispatch) {
   return (
     <div className="biu-calendar__header">
       <Back onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); props.dispatch({type: 'prev'})}}/>
-      {`${props.year}年${props.month}月`}
+      {`${props.year}年${props.month}月${props.day}日`}
       <Next onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); props.dispatch({type: 'next'})}}/>
     </div>
   )
@@ -127,12 +130,22 @@ function ButtonGroup (props: IhandleDateType) {
 function App() {
   const [state, dispatch] = useReducer(handleDateReducer, initalState);
   const [dateType, handleTypeChange] = useState('month');
+  let weekContainer = null;
+  let dayContainer = null;
 
   useEffect(() => {
     // Update the document title using the browser API
     document.title = `Biu-Calendar-List`;
   });
-  
+
+  if (dateType === 'week') {
+    weekContainer = <WeekContainer />;
+    dayContainer = null;
+  } else {
+    weekContainer = null;
+    dayContainer = <DayContainer {...state} />;
+  }
+
   return (
     <div className="App">
       <div id="biu-calendar">
@@ -140,11 +153,45 @@ function App() {
           <CalendarHeader {...state} dispatch={dispatch} />
           <ButtonGroup dateType={dateType} handleTypeChange={handleTypeChange}/>
         </div>
-        <WeekContainer />
-        <DayContainer {...state} />
+        <WeekHeadContainer dateType={dateType}/>
+        {weekContainer}
+        {dayContainer}
       </div>
     </div>
   );
+}
+
+function WeekContainer () {
+  const weekDatas: IWeek[] = [
+    { text: 'SUN', value: 0 },
+    { text: 'MON', value: 1 },
+    { text: 'TUE', value: 2 },
+    { text: 'WED', value: 3 },
+    { text: 'THU', value: 4 },
+    { text: 'FRI', value: 5 },
+    { text: 'SAT', value: 6 }
+  ];
+  const weekList = weekDatas.map((week: IWeek, index: number) => <li className="biu-calendar__hour_item" key={index}></li>);
+  const numbers =
+  ['00:00', '00:30', '01:00', '01:30',
+  '02:00', '02:30', '03:00', '03:30',
+  '04:00', '04:30', '05:00', '05:30',
+  '06:00', '06:30', '07:00', '07:30',
+  '08:00', '08:30', '09:00', '09:30',
+  '10:00', '10:30', '11:00', '11:30',
+  '12:00', '12:30', '13:00', '13:30',
+  '14:00', '14:30', '15:00', '15:30',
+  '16:00', '16:30', '17:00', '17:30',
+  '18:00', '18:30', '19:00', '19:30',
+  '20:00', '20:30', '21:00', '21:30',
+  '22:00', '22:30', '23:00', '23:30'];
+  return (
+    <ul className="biu-calendar__hour-container">
+      {numbers.map((num: string, index: number) =>
+        <div key={index}><span className="biu-calendar__hour_item">{index % 2 === 0 && num}</span>{weekList}</div>
+      )}
+    </ul>
+  )
 }
 
 export default App;
