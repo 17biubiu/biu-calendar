@@ -1,7 +1,7 @@
 import React, {useReducer, useEffect, useState} from 'react';
 import './App.scss';
 import { IWeek } from './Calendar.type';
-import { getCurrentCalendar, previousMonth, nextMonth, defaultYear, defaultMonth, defaultDay } from './utils/time';
+import { getCurrentCalendar, previousMonth, nextMonth, defaultYear, defaultMonth, defaultDay, currentWeek } from './utils/time';
 import {ReactComponent as Back} from './assets/svg/back.svg';
 import {ReactComponent as Next} from './assets/svg/next.svg';
 import { Radio} from 'antd';
@@ -41,7 +41,7 @@ const initalState:IDate = {
 /**
  * Render Week Component
  */
-function WeekHeadContainer(props: Partial<IhandleDateType>) {
+function WeekHeadContainer(props: Partial<IhandleDateType> & IDate) {
   const weekDatas: IWeek[] = [
     { text: 'SUN', value: 0 },
     { text: 'MON', value: 1 },
@@ -51,11 +51,14 @@ function WeekHeadContainer(props: Partial<IhandleDateType>) {
     { text: 'FRI', value: 5 },
     { text: 'SAT', value: 6 }
   ];
+  const dates = currentWeek(props.year, props.month, props.day || 1);
   const isWeek = props.dateType === 'week';
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   isWeek ? weekDatas.unshift({text: '', value: -1}) : '';
-
-  const weekList = weekDatas.map((week: IWeek) => <li className="biu-calendar__week_item" key={week.value}>{week.text}</li>);
+  const getIndex = dates.indexOf(props.day || 1);
+  const weekList = weekDatas.map((week: IWeek, index) =>
+    <li className={(isWeek &&  getIndex === index - 1 )? 'biu-calendar__week_item active' : 'biu-calendar__week_item'} key={week.value}>{week.text} {week.text && isWeek && dates[index - 1]}</li>
+  );
 
   return (
     <ul className={isWeek ? 'biu-calendar__week biu-calendar__week-header' : 'biu-calendar__week'}>
@@ -153,7 +156,7 @@ function App() {
           <CalendarHeader {...state} dispatch={dispatch} />
           <ButtonGroup dateType={dateType} handleTypeChange={handleTypeChange}/>
         </div>
-        <WeekHeadContainer dateType={dateType}/>
+        <WeekHeadContainer dateType={dateType} {...state}/>
         {weekContainer}
         {dayContainer}
       </div>

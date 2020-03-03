@@ -108,6 +108,18 @@ export function nextMonth (year: number, month: number) {
   return {year, month};
 }
 
+export function currentWeek (year: number, month: number, day: number) {
+  const currentDate = new Date(formateDate(year, month, day));
+  const timesStamp = currentDate.getTime();
+  const currenDay = currentDate.getDay();
+  const dates = [];
+  for(var i = -1; i < 7; i++) {
+    // .toLocaleDateString().replace(/[年月]/g, '-').replace(/[日上下午]/g, '')
+    dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7)).getDate());
+  }
+  return dates
+}
+
 export {defaultYear, defaultMonth, defaultDay};
 
 // const minYear = 1890;//最小年限

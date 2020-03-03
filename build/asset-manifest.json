@@ -1,24 +1,27 @@
 {
   "files": {
-    "main.css": "/biu-calendar/static/css/main.2b6780de.chunk.css",
-    "main.js": "/biu-calendar/static/js/main.6c410ee5.chunk.js",
-    "main.js.map": "/biu-calendar/static/js/main.6c410ee5.chunk.js.map",
+    "main.css": "/biu-calendar/static/css/main.aaf19e81.chunk.css",
+    "main.js": "/biu-calendar/static/js/main.c400988b.chunk.js",
+    "main.js.map": "/biu-calendar/static/js/main.c400988b.chunk.js.map",
     "runtime-main.js": "/biu-calendar/static/js/runtime-main.1f879b88.js",
     "runtime-main.js.map": "/biu-calendar/static/js/runtime-main.1f879b88.js.map",
-    "static/js/2.45b900c5.chunk.js": "/biu-calendar/static/js/2.45b900c5.chunk.js",
-    "static/js/2.45b900c5.chunk.js.map": "/biu-calendar/static/js/2.45b900c5.chunk.js.map",
+    "static/css/2.03d7f783.chunk.css": "/biu-calendar/static/css/2.03d7f783.chunk.css",
+    "static/js/2.b2de8497.chunk.js": "/biu-calendar/static/js/2.b2de8497.chunk.js",
+    "static/js/2.b2de8497.chunk.js.map": "/biu-calendar/static/js/2.b2de8497.chunk.js.map",
     "index.html": "/biu-calendar/index.html",
-    "precache-manifest.7db69591ba0057dabcf1795932b93afc.js": "/biu-calendar/precache-manifest.7db69591ba0057dabcf1795932b93afc.js",
+    "precache-manifest.2bf229f6721af9dcdf8d02f2b25a140e.js": "/biu-calendar/precache-manifest.2bf229f6721af9dcdf8d02f2b25a140e.js",
     "service-worker.js": "/biu-calendar/service-worker.js",
-    "static/css/main.2b6780de.chunk.css.map": "/biu-calendar/static/css/main.2b6780de.chunk.css.map",
-    "static/js/2.45b900c5.chunk.js.LICENSE.txt": "/biu-calendar/static/js/2.45b900c5.chunk.js.LICENSE.txt",
+    "static/css/2.03d7f783.chunk.css.map": "/biu-calendar/static/css/2.03d7f783.chunk.css.map",
+    "static/css/main.aaf19e81.chunk.css.map": "/biu-calendar/static/css/main.aaf19e81.chunk.css.map",
+    "static/js/2.b2de8497.chunk.js.LICENSE.txt": "/biu-calendar/static/js/2.b2de8497.chunk.js.LICENSE.txt",
     "static/media/back.71c1d03e.svg": "/biu-calendar/static/media/back.71c1d03e.svg",
     "static/media/next.50fadb9c.svg": "/biu-calendar/static/media/next.50fadb9c.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.1f879b88.js",
-    "static/js/2.45b900c5.chunk.js",
-    "static/css/main.2b6780de.chunk.css",
-    "static/js/main.6c410ee5.chunk.js"
+    "static/css/2.03d7f783.chunk.css",
+    "static/js/2.b2de8497.chunk.js",
+    "static/css/main.aaf19e81.chunk.css",
+    "static/js/main.c400988b.chunk.js"
   ]
 }

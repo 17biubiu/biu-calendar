@@ -45,6 +45,10 @@
   border-top: 1px solid rgba(166, 168, 179, .3);
   line-height: 50px;
   font-weight: 500;
+  &.active {
+    background: rgb(253, 171, 61);
+    color: #fff;
+  }
 }
 .biu-calendar__hour-container div {
   display: grid;
