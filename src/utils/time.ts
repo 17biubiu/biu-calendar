@@ -84,12 +84,8 @@ export function getCurrentDate () {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  let week = date.getDay();
-  if (week === 0) {
-    week = 7;
-  }
 
-  return {year, month, day, week};
+  return {year, month, day};
 }
 
 export function previousMonth (year: number, month: number) {
@@ -120,12 +116,15 @@ export function getCurrentWeek (year: number, month: number, day: number) {
     week = 7;
   }
   const dates = [];
+  const current = getCurrentDate();
   for(let i = week; i >= 0; i--) {
-    dates.push(new Date(timesStamp - 24 * 60 * 60 * 1000 * i).getDate());
+    let d = new Date(timesStamp - 24 * 60 * 60 * 1000 * i);
+    dates.push({day: d.getDate(), isToday: formateDate(current.year, current.month, current.day) === formateDate(d.getFullYear(), d.getMonth() + 1, d.getDate())});
   }
 
   for(let i = 1; i <= 6 - week; i++) {
-    dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * i).getDate());
+    let d = new Date(timesStamp + 24 * 60 * 60 * 1000 * i);
+    dates.push({day: d.getDate(), isToday: formateDate(current.year, current.month, current.day) === formateDate(d.getFullYear(), d.getMonth() + 1, d.getDate())});
   }
   return dates
 }

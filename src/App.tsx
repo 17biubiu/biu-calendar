@@ -56,9 +56,8 @@ function WeekHeadContainer(props: Partial<IhandleDateType> & IDate) {
   const isWeek = props.dateType === 'week';
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   isWeek ? weekDatas.unshift({text: '', value: -1}) : '';
-  const getIndex = dates.indexOf(props.day || 1);
   const weekList = weekDatas.map((week: IWeek, index) =>
-    <li className={(isWeek &&  getIndex === index - 1 )? 'biu-calendar__week_item active' : 'biu-calendar__week_item'} key={week.value}>{week.text} {week.text && isWeek && dates[index - 1]}</li>
+    <li className={(isWeek &&  dates[index - 1]?.isToday) ? 'biu-calendar__week_item active' : 'biu-calendar__week_item'} key={week.value}>{week.text} {week.text && isWeek && dates[index - 1].day}</li>
   );
 
   return (
@@ -167,7 +166,7 @@ function App() {
 
 function WeekContainer (props: IDate) {
   const dates = getCurrentWeek(props.year, props.month, props.day || 1);
-const weekList = dates.map((day: number, index: number) => <li className="biu-calendar__hour_item" key={index}>{day}</li>);
+const weekList = dates.map((day, index: number) => <li className="biu-calendar__hour_item" key={index}>{day.day}</li>);
   const numbers =
   ['00:00', '00:30', '01:00', '01:30',
   '02:00', '02:30', '03:00', '03:30',
