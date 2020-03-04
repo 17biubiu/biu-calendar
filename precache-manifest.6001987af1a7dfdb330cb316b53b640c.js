@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a930ea89164cb42e9bf799ac7919c280",
+    "revision": "400b4cc3e3c4d7aae6ff62285d8426ab",
     "url": "/biu-calendar/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/biu-calendar/static/css/2.03d7f783.chunk.css"
   },
   {
-    "revision": "b25ad43add7c497f89f3",
+    "revision": "028cd54cc2ba7c4869b6",
     "url": "/biu-calendar/static/css/main.ec34b789.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/biu-calendar/static/js/2.b2de8497.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "b25ad43add7c497f89f3",
-    "url": "/biu-calendar/static/js/main.a38e4d21.chunk.js"
+    "revision": "028cd54cc2ba7c4869b6",
+    "url": "/biu-calendar/static/js/main.e2ad4130.chunk.js"
   },
   {
     "revision": "ee8accc152d2592b4532",

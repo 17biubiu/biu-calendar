@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/biu-calendar/static/css/main.ec34b789.chunk.css",
-    "main.js": "/biu-calendar/static/js/main.a38e4d21.chunk.js",
-    "main.js.map": "/biu-calendar/static/js/main.a38e4d21.chunk.js.map",
+    "main.js": "/biu-calendar/static/js/main.e2ad4130.chunk.js",
+    "main.js.map": "/biu-calendar/static/js/main.e2ad4130.chunk.js.map",
     "runtime-main.js": "/biu-calendar/static/js/runtime-main.1f879b88.js",
     "runtime-main.js.map": "/biu-calendar/static/js/runtime-main.1f879b88.js.map",
     "static/css/2.03d7f783.chunk.css": "/biu-calendar/static/css/2.03d7f783.chunk.css",
     "static/js/2.b2de8497.chunk.js": "/biu-calendar/static/js/2.b2de8497.chunk.js",
     "static/js/2.b2de8497.chunk.js.map": "/biu-calendar/static/js/2.b2de8497.chunk.js.map",
     "index.html": "/biu-calendar/index.html",
-    "precache-manifest.d52d746fe1ddde50e8df3f76518b0f29.js": "/biu-calendar/precache-manifest.d52d746fe1ddde50e8df3f76518b0f29.js",
+    "precache-manifest.6001987af1a7dfdb330cb316b53b640c.js": "/biu-calendar/precache-manifest.6001987af1a7dfdb330cb316b53b640c.js",
     "service-worker.js": "/biu-calendar/service-worker.js",
     "static/css/2.03d7f783.chunk.css.map": "/biu-calendar/static/css/2.03d7f783.chunk.css.map",
     "static/css/main.ec34b789.chunk.css.map": "/biu-calendar/static/css/main.ec34b789.chunk.css.map",
@@ -22,6 +22,6 @@
     "static/css/2.03d7f783.chunk.css",
     "static/js/2.b2de8497.chunk.js",
     "static/css/main.ec34b789.chunk.css",
-    "static/js/main.a38e4d21.chunk.js"
+    "static/js/main.e2ad4130.chunk.js"
   ]
 }
