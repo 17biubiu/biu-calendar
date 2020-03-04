@@ -84,8 +84,12 @@ export function getCurrentDate () {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
+  let week = date.getDay();
+  if (week === 0) {
+    week = 7;
+  }
 
-  return {year, month, day};
+  return {year, month, day, week};
 }
 
 export function previousMonth (year: number, month: number) {
@@ -108,16 +112,45 @@ export function nextMonth (year: number, month: number) {
   return {year, month};
 }
 
-export function currentWeek (year: number, month: number, day: number) {
+export function getCurrentWeek (year: number, month: number, day: number) {
   const currentDate = new Date(formateDate(year, month, day));
   const timesStamp = currentDate.getTime();
-  const currenDay = currentDate.getDay();
+  let week = currentDate.getDay();
+  if (week === 0) {
+    week = 7;
+  }
   const dates = [];
-  for(var i = -1; i < 6; i++) {
-    // .toLocaleDateString().replace(/[年月]/g, '-').replace(/[日上下午]/g, '')
-    dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * (i - (currenDay + 6) % 7)).getDate());
+  for(let i = week; i >= 0; i--) {
+    dates.push(new Date(timesStamp - 24 * 60 * 60 * 1000 * i).getDate());
+  }
+
+  for(let i = 1; i <= 6 - week; i++) {
+    dates.push(new Date(timesStamp + 24 * 60 * 60 * 1000 * i).getDate());
   }
   return dates
+}
+
+
+export function previousWeek (year: number, month: number, day: number) {
+  const currentDate = new Date(formateDate(year, month, day));
+  const timesStamp = currentDate.getTime();
+  let prevWeekTimes = timesStamp - 24 * 60 * 60 * 1000 * 7;
+  let date = new Date(prevWeekTimes);
+  let newYear = date.getFullYear();
+  let newMonth = date.getMonth() + 1;
+  let newDay = date.getDate();
+  return {year: newYear, month: newMonth, day: newDay};
+}
+
+export function nextWeek (year: number, month: number, day: number) {
+  const currentDate = new Date(formateDate(year, month, day));
+  const timesStamp = currentDate.getTime();
+  let prevWeekTimes = timesStamp + 24 * 60 * 60 * 1000 * 7;
+  let date = new Date(prevWeekTimes);
+  let newYear = date.getFullYear();
+  let newMonth = date.getMonth() + 1;
+  let newDay = date.getDate();
+  return {year: newYear, month: newMonth, day: newDay};
 }
 
 export {defaultYear, defaultMonth, defaultDay};

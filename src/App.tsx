@@ -1,7 +1,7 @@
 import React, {useReducer, useEffect, useState} from 'react';
 import './App.scss';
 import { IWeek } from './Calendar.type';
-import { getCurrentCalendar, previousMonth, nextMonth, defaultYear, defaultMonth, defaultDay, currentWeek } from './utils/time';
+import { getCurrentCalendar, previousMonth, nextMonth, defaultYear, defaultMonth, defaultDay, getCurrentWeek, previousWeek, nextWeek } from './utils/time';
 import {ReactComponent as Back} from './assets/svg/back.svg';
 import {ReactComponent as Next} from './assets/svg/next.svg';
 import { Radio} from 'antd';
@@ -23,6 +23,7 @@ interface IDateObject {
 
 interface Action {
   type: string;
+  dateType: string;
 }
 interface WithDispatch {
   dispatch: (action: Action) => void;
@@ -51,7 +52,7 @@ function WeekHeadContainer(props: Partial<IhandleDateType> & IDate) {
     { text: 'FRI', value: 5 },
     { text: 'SAT', value: 6 }
   ];
-  const dates = currentWeek(props.year, props.month, props.day || 1);
+  const dates = getCurrentWeek(props.year, props.month, props.day || 1);
   const isWeek = props.dateType === 'week';
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   isWeek ? weekDatas.unshift({text: '', value: -1}) : '';
@@ -93,11 +94,11 @@ function DayContainer(props: IDate) {
 function handleDateReducer(state: IDate, action: Action) {
   switch (action.type) {
     case 'prev':
-      getCurrentCalendar(state.year, state.month, 1);
-      return Object.assign({ ...state }, previousMonth(state.year, state.month));
+      // getCurrentCalendar(state.year, state.month, 1);
+      return Object.assign({ ...state }, action.dateType === 'week'? previousWeek(state.year, state.month, state.day || 1) : previousMonth(state.year, state.month));
     case 'next':
-      getCurrentCalendar(state.year, state.month, 1);
-      return Object.assign({ ...state }, nextMonth(state.year, state.month));
+      // getCurrentCalendar(state.year, state.month, 1);
+      return Object.assign({ ...state }, action.dateType === 'week'? nextWeek(state.year, state.month, state.day || 1) : nextMonth(state.year, state.month));
     default:
       throw new Error();
   }
@@ -108,12 +109,12 @@ function handleDateReducer(state: IDate, action: Action) {
  * calendar header switch date
  * @param props 
  */
-function CalendarHeader (props: IDate & WithDispatch) {
+function CalendarHeader (props: IDate & WithDispatch & Partial<IhandleDateType>) {
   return (
     <div className="biu-calendar__header">
-      <Back onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); props.dispatch({type: 'prev'})}}/>
+      <Back onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); props.dispatch({type: 'prev', dateType: props.dateType})}}/>
       {`${props.year}年${props.month}月${props.day}日`}
-      <Next onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); props.dispatch({type: 'next'})}}/>
+      <Next onClick={(event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {event.stopPropagation(); props.dispatch({type: 'next', dateType: props.dateType})}}/>
     </div>
   )
 }
@@ -142,7 +143,7 @@ function App() {
   });
 
   if (dateType === 'week') {
-    weekContainer = <WeekContainer />;
+    weekContainer = <WeekContainer {...state}/>;
     dayContainer = null;
   } else {
     weekContainer = null;
@@ -153,7 +154,7 @@ function App() {
     <div className="App">
       <div id="biu-calendar">
         <div className="biu-calendar__header—container">
-          <CalendarHeader {...state} dispatch={dispatch} />
+          <CalendarHeader {...state} dispatch={dispatch} dateType={dateType}/>
           <ButtonGroup dateType={dateType} handleTypeChange={handleTypeChange}/>
         </div>
         <WeekHeadContainer dateType={dateType} {...state}/>
@@ -164,17 +165,9 @@ function App() {
   );
 }
 
-function WeekContainer () {
-  const weekDatas: IWeek[] = [
-    { text: 'SUN', value: 0 },
-    { text: 'MON', value: 1 },
-    { text: 'TUE', value: 2 },
-    { text: 'WED', value: 3 },
-    { text: 'THU', value: 4 },
-    { text: 'FRI', value: 5 },
-    { text: 'SAT', value: 6 }
-  ];
-  const weekList = weekDatas.map((week: IWeek, index: number) => <li className="biu-calendar__hour_item" key={index}></li>);
+function WeekContainer (props: IDate) {
+  const dates = getCurrentWeek(props.year, props.month, props.day || 1);
+const weekList = dates.map((day: number, index: number) => <li className="biu-calendar__hour_item" key={index}>{day}</li>);
   const numbers =
   ['00:00', '00:30', '01:00', '01:30',
   '02:00', '02:30', '03:00', '03:30',
